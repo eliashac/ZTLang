@@ -25,11 +25,17 @@ public class TestZTLang extends ZTLangTest {
     // public final Password password123 = new Password("password123");
     public final User alice = new User("alice");
     public final PEP pep = new PEP("pep");
+    public final PE pe = new PE("pe");
+    public final PA pa = new PA("pa");
+    public final EnterpriseResource resource = new EnterpriseResource("resource");
 
     public ZTLangModel() {
       //internet.addHosts(server);
       //server.addPasswords(password123);
       pep.addUsers(alice);
+      pa.addPep(pep);
+      pe.addPa(pa);
+      pep.addResource(resource);
     }
   }
 
@@ -39,10 +45,13 @@ public class TestZTLang extends ZTLangTest {
 
     var attacker = new Attacker();
     attacker.addAttackPoint(model.alice.RequestAccess);
-    //attacker.addAttackPoint(model.password123.obtain);
+    // attacker.addAttackPoint(model.pep.ForwardAccessRequestToPA);
+    // attacker.addAttackPoint(model.pa.ConsultPE);
+    // attacker.addAttackPoint(model.pe.)
     attacker.attack();
 
-    model.alice.RequestAccess.assertCompromisedInstantaneously();
+    model.resource.Access.assertCompromisedInstantaneously();
+    // model.alice.RequestAccess.assertCompromisedInstantaneously();
   }
 
   // @Test

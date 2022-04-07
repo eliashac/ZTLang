@@ -26,28 +26,40 @@ category User {
 
 category PEP {
   asset PEP {
+    | AllowAccess
+      -> resource.Access
+
     | ForwardAccessRequestToPA
+      -> pa.ConsultPE
   }
 }
 
-// category ControlPlane {
-//   asset PE {
+category ControlPlane {
+  asset PE {
+    | GrantTrustedScore
+      -> pa.CommandPEPToGrantAccess
+  }
 
-//   }
+  asset PA {
+    | CommandPEPToGrantAccess
+      -> pep.AllowAccess
 
-//   asset PA {
+    | ConsultPE
+      -> pe.GrantTrustedScore
+  }
+}
 
-//   }
-// }
-
-// category Resource {
-//   asset EnterpriseResource {
-
-//   }
-// }
+category Resource {
+  asset EnterpriseResource {
+    | Access
+  }
+}
 
 associations {
   User [users] * <-- requestAccess --> 1 [pep] PEP
+  PEP [pep] 1 <-- forwardsRequest --> 1 [pa] PA
+  PA [pa] 1 <-- consults --> 1 [pe] PE
+  PEP [pep] 1 <-- allowsAccess --> * [resource] EnterpriseResource
 }
 
 // category System {
