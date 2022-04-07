@@ -13,14 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.mal_lang.examplelang.test;
+package org.mal_lang.ztlang.test;
 
 import core.Asset;
 import core.AttackStep;
 import core.Defense;
 import org.junit.jupiter.api.AfterEach;
 
-public class ExampleLangTest {
+public class ZTLangTest {
   @AfterEach
   public void deleteModel() {
     Asset.allAssets.clear();
