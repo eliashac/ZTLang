@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#id: "org.mal-lang.examplelang"
+#id: "org.mal-lang.ztlang"
 #version: "1.0.0"
 
 category System {
