@@ -13,28 +13,32 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.mal_lang.ztlang.test;
+package com.ztlang.test;
 
 import core.Attacker;
 import org.junit.jupiter.api.Test;
 
-public class TestGuessPassword extends ZTLangTest {
-  private static class GuessPasswordModel {
+public class TestPhishing extends ZTLangTest {
+  private static class PhishingModel {
     public final Network internet = new Network("internet");
     public final Host server = new Host("server");
+    public final User alice = new User("Alice");
+    public final Password password123 = new Password("password123");
 
-    public GuessPasswordModel() {
+    public PhishingModel() {
       internet.addHosts(server);
+      server.addPasswords(password123);
+      alice.addPasswords(password123);
     }
   }
 
   @Test
-  public void testGuessPassword() {
-    var model = new GuessPasswordModel();
+  public void testPhishing() {
+    var model = new PhishingModel();
 
     var attacker = new Attacker();
     attacker.addAttackPoint(model.internet.access);
-    attacker.addAttackPoint(model.server.guessPassword);
+    attacker.addAttackPoint(model.alice.attemptPhishing);
     attacker.attack();
 
     model.server.access.assertCompromisedWithEffort();

@@ -13,34 +13,54 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.mal_lang.ztlang.test;
+package com.ztlang.test;
 
 import core.Attacker;
 import org.junit.jupiter.api.Test;
 
-public class TestPhishing extends ZTLangTest {
-  private static class PhishingModel {
+public class TestZTLang extends ZTLangTest {
+  private static class ZTLangModel {
     public final Network internet = new Network("internet");
     public final Host server = new Host("server");
-    public final User alice = new User("Alice");
     public final Password password123 = new Password("password123");
 
-    public PhishingModel() {
+    public ZTLangModel() {
       internet.addHosts(server);
       server.addPasswords(password123);
-      alice.addPasswords(password123);
     }
   }
 
   @Test
-  public void testPhishing() {
-    var model = new PhishingModel();
+  public void testAccess() {
+    var model = new ZTLangModel();
 
     var attacker = new Attacker();
     attacker.addAttackPoint(model.internet.access);
-    attacker.addAttackPoint(model.alice.attemptPhishing);
+    attacker.addAttackPoint(model.password123.obtain);
     attacker.attack();
 
-    model.server.access.assertCompromisedWithEffort();
+    model.server.access.assertCompromisedInstantaneously();
+  }
+
+  @Test
+  public void testNoPassword() {
+    var model = new ZTLangModel();
+
+    var attacker = new Attacker();
+    attacker.addAttackPoint(model.internet.access);
+    attacker.attack();
+
+    model.server.access.assertUncompromised();
+  }
+
+  @Test
+  public void testNoNetwork() {
+    var model = new ZTLangModel();
+
+    var attacker = new Attacker();
+    attacker.addAttackPoint(model.password123.obtain);
+    attacker.attack();
+
+    model.server.access.assertUncompromised();
   }
 }

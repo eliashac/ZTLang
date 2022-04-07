@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.mal_lang.ztlang.test;
+package com.ztlang.test;
 
 import core.Asset;
 import core.AttackStep;
