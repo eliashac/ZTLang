@@ -16,39 +16,73 @@
 #id: "org.mal-lang.ztlang"
 #version: "1.0.0"
 
-category System {
-  asset Network {
-    | access
-      -> hosts.connect
-  }
 
-  asset Host {
-    | connect
-      -> access
-    | authenticate
-      -> access
-    | guessPassword
-      -> guessedPassword
-    | guessedPassword [Exponential(0.02)]
-      -> authenticate
-    & access
-  }
-
+category User {
   asset User {
-    | attemptPhishing
-      -> phish
-    | phish [Exponential(0.1)]
-      -> passwords.obtain
-  }
-
-  asset Password {
-    | obtain
-      -> host.authenticate
+    | RequestAccess
+      -> pep.ForwardAccessRequestToPA
   }
 }
+
+category PEP {
+  asset PEP {
+    | ForwardAccessRequestToPA
+  }
+}
+
+// category ControlPlane {
+//   asset PE {
+
+//   }
+
+//   asset PA {
+
+//   }
+// }
+
+// category Resource {
+//   asset EnterpriseResource {
+
+//   }
+// }
 
 associations {
-  Network [networks] * <-- NetworkAccess --> * [hosts] Host
-  Host [host] 1 <-- Credentials --> * [passwords] Password
-  User [user] 1 <-- Credentials --> * [passwords] Password
+  User [users] * <-- requestAccess --> 1 [pep] PEP
 }
+
+// category System {
+//   asset Network {
+//     | access
+//       -> hosts.connect
+//   }
+
+//   asset Host {
+//     | connect
+//       -> access
+//     | authenticate
+//       -> access
+//     | guessPassword
+//       -> guessedPassword
+//     | guessedPassword [Exponential(0.02)]
+//       -> authenticate
+//     & access
+//   }
+
+//   asset User {
+//     | attemptPhishing
+//       -> phish
+//     | phish [Exponential(0.1)]
+//       -> passwords.obtain
+//   }
+
+//   asset Password {
+//     | obtain
+//       -> host.authenticate
+//   }
+// }
+
+// associations {
+//   Network [networks] * <-- NetworkAccess --> * [hosts] Host
+//   Host [host] 1 <-- Credentials --> * [passwords] Password
+//   User [user] 1 <-- Credentials --> * [passwords] Password
+// }

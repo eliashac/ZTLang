@@ -20,47 +20,62 @@ import org.junit.jupiter.api.Test;
 
 public class TestZTLang extends ZTLangTest {
   private static class ZTLangModel {
-    public final Network internet = new Network("internet");
-    public final Host server = new Host("server");
-    public final Password password123 = new Password("password123");
+    // public final Network internet = new Network("internet");
+    // public final Host server = new Host("server");
+    // public final Password password123 = new Password("password123");
+    public final User alice = new User("alice");
+    public final PEP pep = new PEP("pep");
 
     public ZTLangModel() {
-      internet.addHosts(server);
-      server.addPasswords(password123);
+      //internet.addHosts(server);
+      //server.addPasswords(password123);
+      pep.addUsers(alice);
     }
   }
 
   @Test
-  public void testAccess() {
+  public void testRequestAccess() {
     var model = new ZTLangModel();
 
     var attacker = new Attacker();
-    attacker.addAttackPoint(model.internet.access);
-    attacker.addAttackPoint(model.password123.obtain);
+    attacker.addAttackPoint(model.alice.RequestAccess);
+    //attacker.addAttackPoint(model.password123.obtain);
     attacker.attack();
 
-    model.server.access.assertCompromisedInstantaneously();
+    model.alice.RequestAccess.assertCompromisedInstantaneously();
   }
 
-  @Test
-  public void testNoPassword() {
-    var model = new ZTLangModel();
+  // @Test
+  // public void testAccess() {
+  //   var model = new ZTLangModel();
 
-    var attacker = new Attacker();
-    attacker.addAttackPoint(model.internet.access);
-    attacker.attack();
+  //   var attacker = new Attacker();
+  //   attacker.addAttackPoint(model.internet.access);
+  //   attacker.addAttackPoint(model.password123.obtain);
+  //   attacker.attack();
 
-    model.server.access.assertUncompromised();
-  }
+  //   model.server.access.assertCompromisedInstantaneously();
+  // }
 
-  @Test
-  public void testNoNetwork() {
-    var model = new ZTLangModel();
+  // @Test
+  // public void testNoPassword() {
+  //   var model = new ZTLangModel();
 
-    var attacker = new Attacker();
-    attacker.addAttackPoint(model.password123.obtain);
-    attacker.attack();
+  //   var attacker = new Attacker();
+  //   attacker.addAttackPoint(model.internet.access);
+  //   attacker.attack();
 
-    model.server.access.assertUncompromised();
-  }
+  //   model.server.access.assertUncompromised();
+  // }
+
+  // @Test
+  // public void testNoNetwork() {
+  //   var model = new ZTLangModel();
+
+  //   var attacker = new Attacker();
+  //   attacker.addAttackPoint(model.password123.obtain);
+  //   attacker.attack();
+
+  //   model.server.access.assertUncompromised();
+  // }
 }
