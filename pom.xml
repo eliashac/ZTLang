@@ -18,14 +18,14 @@ limitations under the License.
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>org.mal-lang</groupId>
-  <artifactId>examplelang</artifactId>
+  <artifactId>ztlang</artifactId>
   <version>1.0.0</version>
   <packaging>jar</packaging>
 
-  <name>exampleLang</name>
+  <name>ZTLang</name>
   <description>A MAL language that demonstrates the Maven project structure</description>
-  <url>https://github.com/mal-lang/exampleLang</url>
-  <inceptionYear>2020</inceptionYear>
+  <url>https://github.com/eliashac/ZTLang</url>
+  <inceptionYear>2022</inceptionYear>
   <organization>
     <name>MAL</name>
     <url>https://mal-lang.org</url>
@@ -39,6 +39,7 @@ limitations under the License.
   </licenses>
 
   <developers>
+      <!--
     <developer>
       <id>maxwalls</id>
       <name>Max Wällstedt</name>
@@ -54,6 +55,7 @@ limitations under the License.
         <picUrl>https://www.gravatar.com/avatar/f32021f9158fb3e2fc06414d056f46ec?size=64</picUrl>
       </properties>
     </developer>
+    -->
   </developers>
 
   <scm>
@@ -77,9 +79,9 @@ limitations under the License.
     <kernelcad.version>1.6.4</kernelcad.version>
     <corelib.version>${kernelcad.version}</corelib.version>
     <simulator.version>${kernelcad.version}</simulator.version>
-    <mal.file>exampleLang.mal</mal.file>
-    <mal.securicad.package>org.mal_lang.examplelang</mal.securicad.package>
-    <mal.reference.package>org.mal_lang.examplelang.test</mal.reference.package>
+    <mal.file>ZTLang.mal</mal.file>
+    <mal.securicad.package>com.ztlang</mal.securicad.package>       <!-- ändra? -->
+    <mal.reference.package>com.ztlang.test</mal.reference.package>  <!-- ändra? -->
   </properties>
 
   <dependencies>
