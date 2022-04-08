@@ -24,6 +24,16 @@ category User {
   }
 }
 
+category Device {
+  asset Device {
+    | Compromise
+      -> user.RequestAccess
+
+    | IsTrusted
+      -> pe.AssertTrustedDevice
+  }
+}
+
 category PEP {
   asset PEP {
     | AllowAccess
@@ -36,7 +46,10 @@ category PEP {
 
 category ControlPlane {
   asset PE {
-    | GrantTrustedScore
+    | AssertTrustedDevice
+      -> GrantTrustedScore
+
+    & GrantTrustedScore
       -> pa.CommandPEPToGrantAccess
   }
 
@@ -57,6 +70,8 @@ category Resource {
 
 associations {
   User [users] * <-- requestAccess --> 1 [pep] PEP
+  User [user] 1 <-- uses --> * [devices] Device
+  Device [device] * <-- assertsTrusted --> 1 [pe] PE
   PEP [pep] 1 <-- forwardsRequest --> 1 [pa] PA
   PA [pa] 1 <-- consults --> 1 [pe] PE
   PEP [pep] 1 <-- allowsAccess --> * [resource] EnterpriseResource

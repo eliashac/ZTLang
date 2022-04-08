@@ -25,12 +25,14 @@ public class TestZTLang extends ZTLangTest {
     public final PE pe = new PE("pe");
     public final PA pa = new PA("pa");
     public final EnterpriseResource resource = new EnterpriseResource("resource");
+    public final Device device = new Device("device");
 
     public ZTLangModel() {
       pep.addUsers(alice);
       pa.addPep(pep);
       pe.addPa(pa);
       pep.addResource(resource);
+      pe.addDevice(device);
     }
   }
 
@@ -40,6 +42,19 @@ public class TestZTLang extends ZTLangTest {
 
     var attacker = new Attacker();
     attacker.addAttackPoint(model.alice.RequestAccess);
+    attacker.attack();
+
+    //model.resource.Access.assertCompromisedInstantaneously();
+    model.resource.Access.assertUncompromised();
+  }
+
+  @Test
+  public void testRequestAccess2() {
+    var model = new ZTLangModel();
+
+    var attacker = new Attacker();
+    attacker.addAttackPoint(model.alice.RequestAccess);
+    attacker.addAttackPoint(model.device.IsTrusted);
     attacker.attack();
 
     model.resource.Access.assertCompromisedInstantaneously();
