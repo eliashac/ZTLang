@@ -21,44 +21,81 @@ import org.junit.jupiter.api.Test;
 public class TestZTLang extends ZTLangTest {
   private static class ZTLangModel {
     public final User alice = new User("alice");
+    public final User bob   = new User("bob");
     public final PEP pep = new PEP("pep");
     public final PE pe = new PE("pe");
     public final PA pa = new PA("pa");
     public final EnterpriseResource resource = new EnterpriseResource("resource");
-    public final Device alice_device = new Device("alice device");
-    public final Device bob_device = new Device("bob device");
+    public final Device alice_device = new Device("alice device", true);
+    public final Device bob_device   = new Device("bob device", true);
+    public final UserCredentials alice_credentials = new UserCredentials("alice_credentials");
+    public final UserCredentials bob_credentials   = new UserCredentials("bob_credentials");
 
     public ZTLangModel() {
       pep.addUsers(alice);
+      pep.addUsers(bob);
+
       pa.addPep(pep);
+
       pe.addPa(pa);
-      pep.addResource(resource);
       pe.addDevice(alice_device);
       pe.addDevice(bob_device);
+
+      pep.addResource(resource);
+
       alice.addDevices(alice_device);
+      alice.addUserCredentials(alice_credentials);
+
+      bob.addDevices(bob_device);
+      bob.addUserCredentials(bob_credentials);
     }
   }
 
   @Test
-  public void testRequestAccess() {
+  public void testCompromiseCredentialsButNotDevice1() {
     var model = new ZTLangModel();
-
     var attacker = new Attacker();
-    attacker.addAttackPoint(model.alice.RequestAccess);
+
+    attacker.addAttackPoint(model.alice_credentials.Compromise);
     attacker.attack();
 
     model.resource.Access.assertUncompromised();
   }
 
   @Test
-  public void testRequestAccess2() {
+  public void testCompromiseIncompatibleDeviceAndCredentials1() {
     var model = new ZTLangModel();
-
     var attacker = new Attacker();
-    attacker.addAttackPoint(model.alice.RequestAccess);
-    attacker.addAttackPoint(model.bob_device.IsTrusted);
+
+    attacker.addAttackPoint(model.bob_credentials.Compromise);
+    attacker.addAttackPoint(model.alice_device.Compromise);
+    attacker.attack();
+
+    model.resource.Access.assertUncompromised();
+  }
+
+  @Test
+  public void testUntrustedDefense1() {
+    var model = new ZTLangModel();
+    var attacker = new Attacker();
+
+    attacker.addAttackPoint(model.bob_credentials.Compromise);
+    attacker.addAttackPoint(model.bob_device.Compromise);
     attacker.attack();
 
     model.resource.Access.assertCompromisedInstantaneously();
   }
+  /*
+  @Test
+  public void testUntrustedDefense2() {
+    var model = new ZTLangModel();
+
+    var attacker = new Attacker();
+    attacker.addAttackPoint(model.alice_credentials.Compromise);
+    attacker.addAttackPoint(model.alice_device.Compromise);
+    attacker.attack();
+
+    model.resource.Access.assertCompromisedInstantaneously();
+  }
+  */
 }
