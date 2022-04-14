@@ -22,32 +22,39 @@ public class TestZTLang extends ZTLangTest {
   private static class ZTLangModel {
     public final User alice = new User("alice");
     public final User bob   = new User("bob");
-    public final PEP pep = new PEP("pep");
-    public final PE pe = new PE("pe");
-    public final PA pa = new PA("pa");
+    // public final PEP pep = new PEP("pep");
+    // public final PE pe = new PE("pe");
+    // public final PA pa = new PA("pa");
     public final EnterpriseResource resource = new EnterpriseResource("resource");
-    public final Device alice_device = new Device("alice device", true);
-    public final Device bob_device   = new Device("bob device", true);
+    public final Device alice_device = new Device("alice device", false);
+    public final Device bob_device   = new Device("bob device"); //, true);
     public final UserCredentials alice_credentials = new UserCredentials("alice_credentials");
     public final UserCredentials bob_credentials   = new UserCredentials("bob_credentials");
+    public final Agent alice_agent = new Agent("alice agent");
+    public final Agent bob_agent = new Agent("bob agent");
 
     public ZTLangModel() {
-      pep.addUsers(alice);
-      pep.addUsers(bob);
-
-      pa.addPep(pep);
-
-      pe.addPa(pa);
-      pe.addDevice(alice_device);
-      pe.addDevice(bob_device);
-
-      pep.addResource(resource);
-
+      // pa.addPep(pep);
+      // pe.addPa(pa);
+      // pep.addResource(resource);
+      alice_agent.addResource(resource);
+      bob_agent.addResource(resource);
+      
+      //pep.addUsers(alice);
+      //pe.addDevice(alice_device);
       alice.addDevices(alice_device);
       alice.addUserCredentials(alice_credentials);
+      alice_agent.addDevice(alice_device);
+      //pe.addAgent(alice_agent);
+      alice_agent.addUser(alice);
 
+      //pep.addUsers(bob);
+      //pe.addDevice(bob_device);
       bob.addDevices(bob_device);
       bob.addUserCredentials(bob_credentials);
+      bob_agent.addDevice(bob_device);
+      //pe.addAgent(bob_agent);
+      bob_agent.addUser(bob);
     }
   }
 
@@ -75,12 +82,36 @@ public class TestZTLang extends ZTLangTest {
   }
 
   @Test
+  public void testCompromiseIncompatibleDeviceAndCredentials2() {
+    var model = new ZTLangModel();
+    var attacker = new Attacker();
+
+    attacker.addAttackPoint(model.alice_credentials.Compromise);
+    attacker.addAttackPoint(model.bob_device.Compromise);
+    attacker.attack();
+
+    model.resource.Access.assertUncompromised();
+  }
+
+  @Test
   public void testUntrustedDefense1() {
     var model = new ZTLangModel();
     var attacker = new Attacker();
 
     attacker.addAttackPoint(model.bob_credentials.Compromise);
     attacker.addAttackPoint(model.bob_device.Compromise);
+    attacker.attack();
+
+    model.resource.Access.assertUncompromised();
+  }
+
+  @Test
+  public void testUntrustedDefense2() {
+    var model = new ZTLangModel();
+    var attacker = new Attacker();
+
+    attacker.addAttackPoint(model.alice_credentials.Compromise);
+    attacker.addAttackPoint(model.alice_device.Compromise);
     attacker.attack();
 
     model.resource.Access.assertCompromisedInstantaneously();

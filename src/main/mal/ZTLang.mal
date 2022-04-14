@@ -20,7 +20,8 @@
 category User {
   asset User {
     & RequestAccess
-      -> pep.ForwardAccessRequestToPA
+      //-> pep.ForwardAccessRequestToPA
+      -> agent.FormAgent
   }
 }
 
@@ -30,37 +31,52 @@ category Device {
       -> user.RequestAccess
 
     # Untrusted [Enabled]
-      -> pe.GrantTrustedScore
+      -> agent.RequirementsFulfilled
   }
 }
 
-category PEP {
-  asset PEP {
-    | AllowAccess
+category Agent {
+  asset Agent {
+    | FormAgent
+      -> RequirementsFulfilled
+
+    & RequirementsFulfilled
+      //-> pe.GrantTrustedScore
       -> resource.Access
-
-    | ForwardAccessRequestToPA
-      -> pa.ConsultPE
   }
 }
 
-category ControlPlane {
-  asset PE {
-    & GrantTrustedScore
-      -> pa.CommandPEPToGrantAccess
-  }
+// category PEP {
+//   asset PEP {
+//     | AllowAccess
+//       -> resource.Access
 
-  asset PA {
-    | CommandPEPToGrantAccess
-      -> pep.AllowAccess
+//     | ForwardAccessRequestToPA
+//       -> pa.ConsultPE
+//   }
+// }
 
-    | ConsultPE
-      -> pe.GrantTrustedScore
-  }
-}
+// category ControlPlane {
+//   asset PE {
+//     | GrantTrustedScore
+//       -> pa.CommandPEPToGrantAccess
+//   }
+
+//   asset PA {
+//     | CommandPEPToGrantAccess
+//       -> pep.AllowAccess
+
+//     | ConsultPE
+//       -> pe.GrantTrustedScore
+//   }
+// }
 
 category Resource {
   asset EnterpriseResource {
+    | Access
+  }
+
+  asset AccessPolicies extends EnterpriseResource {
     | Access
   }
 }
@@ -73,11 +89,14 @@ category Credentials {
 }
 
 associations {
-  User [users] * <-- requestAccess --> 1 [pep] PEP
+  //User [users] * <-- requestAccess --> 1 [pep] PEP
   User [user] 1 <-- uses --> * [devices] Device
-  Device [device] * <-- assertsTrusted --> 1 [pe] PE
-  PEP [pep] 1 <-- forwardsRequest --> 1 [pa] PA
-  PA [pa] 1 <-- consults --> 1 [pe] PE
-  PEP [pep] 1 <-- allowsAccess --> * [resource] EnterpriseResource
+  //PEP [pep] 1 <-- forwardsRequest --> 1 [pa] PA
+  //PA [pa] 1 <-- consults --> 1 [pe] PE
+  //PEP [pep] 1 <-- allowsAccess --> * [resource] EnterpriseResource
   UserCredentials [userCredentials] 1 <-- userCredentials --> 1 [user] User
+  Device [device] 1 <-- associatedDevice --> 1 [agent] Agent
+  User [User] 1 <-- associatedUser --> 1 [agent] Agent
+  //PE [pe] 1 <-- associatedPE --> * [agent] Agent
+  Agent [agent] * <-- allowsAccess --> 1 [resource] EnterpriseResource
 }
