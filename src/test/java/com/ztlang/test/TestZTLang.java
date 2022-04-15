@@ -22,16 +22,21 @@ public class TestZTLang extends ZTLangTest {
   private static class ZTLangModel {
     public final User alice = new User("alice");
     public final User bob   = new User("bob");
+    public final User charlie   = new User("charlie");
     // public final PEP pep = new PEP("pep");
     // public final PE pe = new PE("pe");
     // public final PA pa = new PA("pa");
     public final EnterpriseResource resource = new EnterpriseResource("resource");
+    public final AccessPolicies accessPolicies = new AccessPolicies("access policies");
     public final Device alice_device = new Device("alice device", false);
     public final Device bob_device   = new Device("bob device"); //, true);
+    public final Device charlie_device = new Device("charlie device", false);
     public final UserCredentials alice_credentials = new UserCredentials("alice_credentials");
     public final UserCredentials bob_credentials   = new UserCredentials("bob_credentials");
+    public final UserCredentials charlie_credentials   = new UserCredentials("charlie_credentials");
     public final Agent alice_agent = new Agent("alice agent");
     public final Agent bob_agent = new Agent("bob agent");
+    public final Agent charlie_agent = new Agent("charlie agent");
 
     public ZTLangModel() {
       // pa.addPep(pep);
@@ -39,7 +44,8 @@ public class TestZTLang extends ZTLangTest {
       // pep.addResource(resource);
       alice_agent.addResource(resource);
       bob_agent.addResource(resource);
-      
+      charlie_agent.addResource(resource);
+
       //pep.addUsers(alice);
       //pe.addDevice(alice_device);
       alice.addDevices(alice_device);
@@ -47,6 +53,7 @@ public class TestZTLang extends ZTLangTest {
       alice_agent.addDevice(alice_device);
       //pe.addAgent(alice_agent);
       alice_agent.addUser(alice);
+      alice.addResources(resource);
 
       //pep.addUsers(bob);
       //pe.addDevice(bob_device);
@@ -55,6 +62,15 @@ public class TestZTLang extends ZTLangTest {
       bob_agent.addDevice(bob_device);
       //pe.addAgent(bob_agent);
       bob_agent.addUser(bob);
+
+      charlie.addDevices(charlie_device);
+      charlie.addUserCredentials(charlie_credentials);
+      charlie_agent.addDevice(charlie_device);
+      //pe.addAgent(charlie_agent);
+      charlie_agent.addUser(charlie);
+      charlie.addResources(accessPolicies);
+
+      accessPolicies.addUsers(alice);
     }
   }
 
@@ -116,17 +132,19 @@ public class TestZTLang extends ZTLangTest {
 
     model.resource.Access.assertCompromisedInstantaneously();
   }
-  /*
-  @Test
-  public void testUntrustedDefense2() {
-    var model = new ZTLangModel();
 
+  @Test
+  public void testCompromiseAccessPoliciesAndPhishing() {
+    var model = new ZTLangModel();
     var attacker = new Attacker();
-    attacker.addAttackPoint(model.alice_credentials.Compromise);
+
+    attacker.addAttackPoint(model.charlie_credentials.Compromise);
+    attacker.addAttackPoint(model.charlie_device.Compromise);
+    //attacker.addAttackPoint(model.accessPolicies.Access);
     attacker.addAttackPoint(model.alice_device.Compromise);
     attacker.attack();
 
     model.resource.Access.assertCompromisedInstantaneously();
   }
-  */
+
 }
