@@ -47,7 +47,7 @@ public class TestZTLang extends ZTLangTest {
       controlplane.addAgent(alice_agent);
       controlplane.addAgent(bob_agent);
       controlplane.addAgent(charlie_agent);
-      controlplane.addResource(resource);
+      controlplane.addResources(resource);
 
       // alice_agent.addResource(resource);
       // bob_agent.addResource(resource);
@@ -150,6 +150,17 @@ public class TestZTLang extends ZTLangTest {
     attacker.addAttackPoint(model.charlie_device.Compromise);
     //attacker.addAttackPoint(model.accessPolicies.Access);
     attacker.addAttackPoint(model.alice_device.Compromise);
+    attacker.attack();
+
+    model.resource.Access.assertCompromisedInstantaneously();
+  }
+
+  @Test
+  public void testCompromiseControlPlane() {
+    var model = new ZTLangModel();
+    var attacker = new Attacker();
+
+    attacker.addAttackPoint(model.controlplane.Compromise);
     attacker.attack();
 
     model.resource.Access.assertCompromisedInstantaneously();

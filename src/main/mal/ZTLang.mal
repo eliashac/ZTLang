@@ -66,6 +66,12 @@ category ControlPlane {
   asset ControlPlane {
     | AllowAccess
       -> agent.user.resources.Access
+
+    | DDoS
+      -> resources.Deny
+
+    | Compromise
+      -> resources.Access
   }
 
   // asset PE {
@@ -85,6 +91,8 @@ category ControlPlane {
 category Resource {
   asset EnterpriseResource {
     | Access
+
+    | Deny
   }
 
   asset AccessPolicies extends EnterpriseResource {
@@ -115,17 +123,7 @@ associations {
   User [users] * <-- requestableResources --> * [resources] EnterpriseResource
   //EnterpriseResource [resources] * <-- access --> 1 [AccessPolicies] AccessPolicies
 
-  ControlPlane [controlplace] 1 <-- allowsAccess --> * [resource] EnterpriseResource
+  ControlPlane [controlplace] 1 <-- allowsAccess --> * [resources] EnterpriseResource
   Agent [agent] * <-- allowsAccess --> 1 [controlplane] ControlPlane
 }
 
-// Anna [ResourceA, ResourceC]
-
-// Bob
-
-
-// ResourceA
-// ResourceB
-// ResourceC
-
-// AccessPolicies [Anna] [ResourceA, ResourceB]
