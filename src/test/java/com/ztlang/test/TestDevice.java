@@ -20,6 +20,8 @@ import org.junit.jupiter.api.Test;
 
 public class TestDevice extends ZTLangTest {
   private static class ZTLangModel {
+    public final ControlPlane controlplane = new ControlPlane("control plane");
+    
     public final User alice = new User("alice");
     public final User bob   = new User("bob");
     public final EnterpriseResource resource = new EnterpriseResource("resource");
@@ -31,8 +33,9 @@ public class TestDevice extends ZTLangTest {
     public final Agent bob_agent = new Agent("bob agent");
 
     public ZTLangModel() {
-      alice_agent.addResource(resource);
-      bob_agent.addResource(resource);
+      controlplane.addAgent(alice_agent);
+      controlplane.addAgent(bob_agent);
+      controlplane.addResources(resource);
       
       alice.addDevices(alice_device);
       alice.addUserCredentials(alice_credentials);
