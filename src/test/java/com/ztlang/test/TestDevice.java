@@ -41,11 +41,13 @@ public class TestDevice extends ZTLangTest {
       alice.addUserCredentials(alice_credentials);
       alice_agent.addDevice(alice_device);
       alice_agent.addUser(alice);
+      alice.addResources(resource);
 
       bob.addDevices(bob_device);
       bob.addUserCredentials(bob_credentials);
       bob_agent.addDevice(bob_device);
       bob_agent.addUser(bob);
+      bob.addResources(resource);
     }
   }
 
