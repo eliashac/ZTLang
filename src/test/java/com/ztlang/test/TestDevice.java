@@ -66,7 +66,7 @@ public class TestDevice extends ZTLangTest {
 
   @Test
   public void AccessResourceWithTrustedDevice() {
-    // Annas device is trusted and he tries to access a resource with her credentials
+    // Alices device is trusted and he tries to access a resource with her credentials
     var model = new ZTLangModel();
     var attacker = new Attacker();
 
@@ -79,7 +79,7 @@ public class TestDevice extends ZTLangTest {
 
   @Test
   public void AccessResourceWithAnotherUntrustedDevice() {
-    // Annas uses Bobs untrusted device, and tries to access a resource with her (Annas) credentials
+    // Alice uses Bobs untrusted device, and tries to access a resource with her (Alices) credentials
     var model = new ZTLangModel();
     var attacker = new Attacker();
 
@@ -92,7 +92,7 @@ public class TestDevice extends ZTLangTest {
 
   @Test
   public void AccessResourceWithAnotherTrustedDevice() {
-    // Bob uses Annans trusted device, and tries to access a resource with his (Bobs) credentials
+    // Bob uses Alices trusted device, and tries to access a resource with his (Bobs) credentials
     var model = new ZTLangModel();
     var attacker = new Attacker();
 
