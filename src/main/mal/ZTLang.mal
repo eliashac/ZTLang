@@ -50,7 +50,8 @@ category Agent {
 category ControlPlane {
   asset ControlPlane {
     | AllowAccess
-      -> agent.user.resources.Access
+      //-> agent.user.resources.Access
+      -> resources.Access
 
     | DDoS
       -> resources.Deny
@@ -69,7 +70,8 @@ category Resource {
 
   asset AccessPolicies extends EnterpriseResource {
     | Access
-      -> users.Phishing
+      //-> users.Phishing
+      -> controlplane.agent.user.Phishing
   }
 }
 
@@ -85,7 +87,7 @@ associations {
   UserCredentials [userCredentials] 1 <-- userCredentials --> 1 [user] User
   Device [device] 1 <-- associatedDevice --> 1 [agent] Agent
   User [user] 1 <-- associatedUser --> 1 [agent] Agent
-  User [users] * <-- requestableResources --> * [resources] EnterpriseResource
-  ControlPlane [controlplace] 1 <-- allowsAccess --> * [resources] EnterpriseResource
+  //User [users] * <-- requestableResources --> * [resources] EnterpriseResource
+  ControlPlane [controlplane] 1 <-- allowsAccess --> * [resources] EnterpriseResource
   Agent [agent] * <-- allowsAccess --> 1 [controlplane] ControlPlane
 }

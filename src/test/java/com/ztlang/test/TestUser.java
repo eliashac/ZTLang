@@ -38,21 +38,22 @@ public class TestUser extends ZTLangTest {
       controlplane.addAgent(bob_agent);
 
       controlplane.addResources(resource);
+      controlplane.addResources(accessPolicies);
 
       alice.addDevices(alice_device);
       alice.addUserCredentials(alice_credentials);
       alice_agent.addDevice(alice_device);
       alice_agent.addUser(alice);
-      alice.addResources(resource);
+      //alice.addResources(resource);
 
       bob.addDevices(bob_device);
       bob.addUserCredentials(bob_credentials);
       bob_agent.addDevice(bob_device);
       bob_agent.addUser(bob);
-      bob.addResources(resource);
+      //bob.addResources(resource);
 
-      accessPolicies.addUsers(alice);
-      accessPolicies.addUsers(bob);
+      //accessPolicies.addUsers(alice);
+      //accessPolicies.addUsers(bob);
     }
   }
 

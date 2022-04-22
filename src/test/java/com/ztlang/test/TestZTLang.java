@@ -47,7 +47,7 @@ public class TestZTLang extends ZTLangTest {
       alice.addUserCredentials(alice_credentials);
       alice_agent.addDevice(alice_device);
       alice_agent.addUser(alice);
-      alice.addResources(resource);
+      //alice.addResources(resource);
 
       bob.addDevices(bob_device);
       bob.addUserCredentials(bob_credentials);
@@ -58,9 +58,9 @@ public class TestZTLang extends ZTLangTest {
       charlie.addUserCredentials(charlie_credentials);
       charlie_agent.addDevice(charlie_device);
       charlie_agent.addUser(charlie);
-      charlie.addResources(accessPolicies);
+      //charlie.addResources(accessPolicies);
 
-      accessPolicies.addUsers(alice);
+      //accessPolicies.addUsers(alice);
     }
   }
 
