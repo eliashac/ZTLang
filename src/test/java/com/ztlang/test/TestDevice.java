@@ -102,4 +102,16 @@ public class TestDevice extends ZTLangTest {
 
     model.resource.Access.assertUncompromised();
   }
+
+  @Test
+  public void AccessResourceWithoutDevice() {
+    // Alices tries to access a resource without a device
+    var model = new ZTLangModel();
+    var attacker = new Attacker();
+
+    attacker.addAttackPoint(model.alice_credentials.Compromise);
+    attacker.attack();
+
+    model.resource.Access.assertUncompromised();
+  }
 }
