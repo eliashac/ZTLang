@@ -73,6 +73,12 @@ category Resource {
       //-> users.Phishing
       -> controlplane.agent.user.Phishing
   }
+
+  asset TrafficLogs extends EnterpriseResource {
+    | Access
+      //-> users.Phishing
+      -> controlplane.agent.user.Phishing
+  }
 }
 
 category Credentials {
