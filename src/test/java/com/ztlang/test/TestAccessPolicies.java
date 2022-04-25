@@ -31,7 +31,7 @@ public class TestAccessPolicies extends ZTLangTest {
     Device bob_device   = new Device("bob device", false);
     UserCredentials bob_credentials   = new UserCredentials("bob_credentials");
     Agent bob_agent = new Agent("bob agent");
-    AccessPolicies bob_accesspolicy = new AccessPolicies("Bob acesspolicy");
+    AccessPolicy bob_accesspolicy = new AccessPolicy("Bob acesspolicy");
     
     // Setting up associations
     controlplane.addAgent(bob_agent);
@@ -65,7 +65,7 @@ public class TestAccessPolicies extends ZTLangTest {
     Device alice_device = new Device("alice device", false);
     UserCredentials alice_credentials = new UserCredentials("alice_credentials");
     Agent alice_agent = new Agent("alice agent");
-    AccessPolicies alice_accesspolicy = new AccessPolicies("Alice acesspolicy");
+    AccessPolicy alice_accesspolicy = new AccessPolicy("Alice acesspolicy");
     
     // Setting up associations
     controlplane.addAgent(alice_agent);
@@ -100,7 +100,7 @@ public class TestAccessPolicies extends ZTLangTest {
     Device bob_device   = new Device("bob device", false);
     UserCredentials bob_credentials   = new UserCredentials("bob_credentials");
     Agent bob_agent = new Agent("bob agent");
-    AccessPolicies bob_accesspolicy = new AccessPolicies("Bob acesspolicy");
+    AccessPolicy bob_accesspolicy = new AccessPolicy("Bob acesspolicy");
     
     // Setting up associations
     controlplane.addAgent(bob_agent);
@@ -138,13 +138,13 @@ public class TestAccessPolicies extends ZTLangTest {
     Device alice_device = new Device("alice device", false);
     UserCredentials alice_credentials = new UserCredentials("alice_credentials");
     Agent alice_agent = new Agent("alice agent");
-    AccessPolicies alice_accesspolicy = new AccessPolicies("Alice acesspolicy");
+    AccessPolicy alice_accesspolicy = new AccessPolicy("Alice acesspolicy");
 
     User bob = new User("bob");
     Device bob_device   = new Device("bob device", false);
     UserCredentials bob_credentials   = new UserCredentials("bob_credentials");
     Agent bob_agent = new Agent("bob agent");
-    AccessPolicies bob_accesspolicy = new AccessPolicies("Bob acesspolicy");
+    AccessPolicy bob_accesspolicy = new AccessPolicy("Bob acesspolicy");
 
 
     // Setting up associations

@@ -37,14 +37,16 @@ public class TestZTLang extends ZTLangTest {
     public final Agent bob_agent = new Agent("bob agent");
     public final Agent charlie_agent = new Agent("charlie agent");
 
-    public final AccessPolicies alice_accesspolicy = new AccessPolicies("Alice acesspolicy");
-    public final AccessPolicies bob_accesspolicy = new AccessPolicies("Bob acesspolicy");
+    public final AccessPolicy alice_accesspolicy = new AccessPolicy("Alice acesspolicy");
+    public final AccessPolicy bob_accesspolicy = new AccessPolicy("Bob acesspolicy");
+    public final AccessPolicy charlie_accesspolicy = new AccessPolicy("Charlie acesspolicy");
 
     public ZTLangModel() {
       controlplane.addAgent(alice_agent);
       controlplane.addAgent(bob_agent);
       controlplane.addAgent(charlie_agent);
       controlplane.addResources(resource);
+      controlplane.addResources(accessPolicies);
 
       alice.addDevices(alice_device);
       alice.addUserCredentials(alice_credentials);
@@ -65,9 +67,17 @@ public class TestZTLang extends ZTLangTest {
 
       alice.addAccessPolicy(alice_accesspolicy);
       bob.addAccessPolicy(bob_accesspolicy);
+      charlie.addAccessPolicy(charlie_accesspolicy);
+
+      alice_accesspolicy.addUser(alice);
 
       alice_accesspolicy.addResource(resource);
       //bob_accesspolicy.addResource(resource);
+      charlie_accesspolicy.addResource(accessPolicies);
+
+      accessPolicies.addAccessPolicy(alice_accesspolicy);
+      accessPolicies.addAccessPolicy(bob_accesspolicy);
+      accessPolicies.addAccessPolicy(charlie_accesspolicy);
 
       //accessPolicies.addUsers(alice);
     }
@@ -132,19 +142,19 @@ public class TestZTLang extends ZTLangTest {
     model.resource.Access.assertCompromisedInstantaneously();
   }
 
-  // @Test
-  // public void testCompromiseAccessPoliciesAndPhishing() {
-  //   var model = new ZTLangModel();
-  //   var attacker = new Attacker();
+  @Test
+  public void testCompromiseAccessPoliciesAndPhishing() {
+    var model = new ZTLangModel();
+    var attacker = new Attacker();
 
-  //   attacker.addAttackPoint(model.charlie_credentials.Compromise);
-  //   attacker.addAttackPoint(model.charlie_device.Compromise);
+    attacker.addAttackPoint(model.charlie_credentials.Compromise);
+    attacker.addAttackPoint(model.charlie_device.Compromise);
 
-  //   attacker.addAttackPoint(model.alice_device.Compromise);
-  //   attacker.attack();
+    attacker.addAttackPoint(model.alice_device.Compromise);
+    attacker.attack();
 
-  //   model.resource.Access.assertCompromisedInstantaneously();
-  // }
+    model.resource.Access.assertCompromisedInstantaneously();
+  }
 
   @Test
   public void testCompromiseControlPlane() {

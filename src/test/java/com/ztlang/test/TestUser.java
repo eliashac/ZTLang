@@ -33,8 +33,8 @@ public class TestUser extends ZTLangTest {
     public final Agent alice_agent = new Agent("alice agent");
     public final Agent bob_agent = new Agent("bob agent");
 
-    public final AccessPolicies alice_accesspolicy = new AccessPolicies("Alice acesspolicy");
-    public final AccessPolicies bob_accesspolicy = new AccessPolicies("Bob acesspolicy");
+    public final AccessPolicy alice_accesspolicy = new AccessPolicy("Alice acesspolicy");
+    public final AccessPolicy bob_accesspolicy = new AccessPolicy("Bob acesspolicy");
 
     public ZTLangModel() {
       controlplane.addAgent(alice_agent);
@@ -69,7 +69,7 @@ public class TestUser extends ZTLangTest {
     var model = new ZTLangModel();
     var attacker = new Attacker();
 
-    attacker.addAttackPoint(model.accessPolicies.Access);
+    attacker.addAttackPoint(model.alice_accesspolicy.Access);
     attacker.attack();
 
     model.alice_credentials.Compromise.assertCompromisedInstantaneously();

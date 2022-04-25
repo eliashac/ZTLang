@@ -72,12 +72,21 @@ category Resource {
 
   asset AccessPolicies extends EnterpriseResource {
     | Access
-      -> controlplane.agent.user.Phishing
+      //-> controlplane.agent.user.Phishing
+      //-> userPolicy.Access
+      -> accessPolicy.Access
   }
 
   asset TrafficLogs extends EnterpriseResource {
     | Access
       -> controlplane.agent.user.Phishing
+  }
+}
+
+category AccessPolicy {
+  asset AccessPolicy {
+    | Access
+      -> user.Phishing
   }
 }
 
@@ -95,6 +104,7 @@ associations {
   User [user] 1 <-- associatedUser --> 1 [agent] Agent
   ControlPlane [controlplane] 1 <-- allowsAccess --> * [resources] EnterpriseResource
   Agent [agent] * <-- allowsAccess --> 1 [controlplane] ControlPlane
-  User [user] 1 <-- accessPolicies --> 1 [accessPolicy] AccessPolicies
-  AccessPolicies [accessPolicy] * <-- accessPolicies --> * [resource] EnterpriseResource
+  User [user] 1 <-- accessPolicy --> 1 [accessPolicy] AccessPolicy
+  AccessPolicy [accessPolicy] * <-- accessPolicy --> * [resource] EnterpriseResource
+  //AccessPolicy [userPolicy] * <-- accessPolicy --> 1 [accessPolicies] AccessPolicies
 }
