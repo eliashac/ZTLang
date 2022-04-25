@@ -31,6 +31,7 @@ public class TestAccessPolicies extends ZTLangTest {
     Device bob_device   = new Device("bob device", false);
     UserCredentials bob_credentials   = new UserCredentials("bob_credentials");
     Agent bob_agent = new Agent("bob agent");
+    AccessPolicies bob_accesspolicy = new AccessPolicies("Bob acesspolicy");
     
     // Setting up associations
     controlplane.addAgent(bob_agent);
@@ -39,6 +40,7 @@ public class TestAccessPolicies extends ZTLangTest {
     bob.addUserCredentials(bob_credentials);
     bob_agent.addDevice(bob_device);
     bob_agent.addUser(bob);
+    bob.addAccessPolicy(bob_accesspolicy);
 
     // Attacker
     var attacker = new Attacker();
@@ -63,6 +65,7 @@ public class TestAccessPolicies extends ZTLangTest {
     Device alice_device = new Device("alice device", false);
     UserCredentials alice_credentials = new UserCredentials("alice_credentials");
     Agent alice_agent = new Agent("alice agent");
+    AccessPolicies alice_accesspolicy = new AccessPolicies("Alice acesspolicy");
     
     // Setting up associations
     controlplane.addAgent(alice_agent);
@@ -71,7 +74,8 @@ public class TestAccessPolicies extends ZTLangTest {
     alice.addUserCredentials(alice_credentials);
     alice_agent.addDevice(alice_device);
     alice_agent.addUser(alice);
-    alice.addResources(resource);
+    alice_accesspolicy.addResource(resource);
+    alice.addAccessPolicy(alice_accesspolicy);
 
     // Attacker
     var attacker = new Attacker();
@@ -96,6 +100,7 @@ public class TestAccessPolicies extends ZTLangTest {
     Device bob_device   = new Device("bob device", false);
     UserCredentials bob_credentials   = new UserCredentials("bob_credentials");
     Agent bob_agent = new Agent("bob agent");
+    AccessPolicies bob_accesspolicy = new AccessPolicies("Bob acesspolicy");
     
     // Setting up associations
     controlplane.addAgent(bob_agent);
@@ -105,7 +110,8 @@ public class TestAccessPolicies extends ZTLangTest {
     bob.addUserCredentials(bob_credentials);
     bob_agent.addDevice(bob_device);
     bob_agent.addUser(bob);
-    bob.addResources(resource_A);
+    bob_accesspolicy.addResource(resource_A);
+    bob.addAccessPolicy(bob_accesspolicy);
 
     // Attacker
     var attacker = new Attacker();
@@ -132,12 +138,15 @@ public class TestAccessPolicies extends ZTLangTest {
     Device alice_device = new Device("alice device", false);
     UserCredentials alice_credentials = new UserCredentials("alice_credentials");
     Agent alice_agent = new Agent("alice agent");
+    AccessPolicies alice_accesspolicy = new AccessPolicies("Alice acesspolicy");
 
     User bob = new User("bob");
     Device bob_device   = new Device("bob device", false);
     UserCredentials bob_credentials   = new UserCredentials("bob_credentials");
     Agent bob_agent = new Agent("bob agent");
-    
+    AccessPolicies bob_accesspolicy = new AccessPolicies("Bob acesspolicy");
+
+
     // Setting up associations
     controlplane.addAgent(bob_agent);
     controlplane.addAgent(alice_agent);
@@ -147,12 +156,14 @@ public class TestAccessPolicies extends ZTLangTest {
     alice.addUserCredentials(alice_credentials);
     alice_agent.addDevice(alice_device);
     alice_agent.addUser(alice);
-    alice.addResources(resource);
+    alice_accesspolicy.addResource(resource);
+    alice.addAccessPolicy(alice_accesspolicy);
     
     bob.addDevices(bob_device);
     bob.addUserCredentials(bob_credentials);
     bob_agent.addDevice(bob_device);
     bob_agent.addUser(bob);
+    bob.addAccessPolicy(bob_accesspolicy);
 
     // Attacker
     var attacker = new Attacker();

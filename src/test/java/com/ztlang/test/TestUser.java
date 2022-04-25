@@ -33,6 +33,9 @@ public class TestUser extends ZTLangTest {
     public final Agent alice_agent = new Agent("alice agent");
     public final Agent bob_agent = new Agent("bob agent");
 
+    public final AccessPolicies alice_accesspolicy = new AccessPolicies("Alice acesspolicy");
+    public final AccessPolicies bob_accesspolicy = new AccessPolicies("Bob acesspolicy");
+
     public ZTLangModel() {
       controlplane.addAgent(alice_agent);
       controlplane.addAgent(bob_agent);
@@ -44,13 +47,15 @@ public class TestUser extends ZTLangTest {
       alice.addUserCredentials(alice_credentials);
       alice_agent.addDevice(alice_device);
       alice_agent.addUser(alice);
-      //alice.addResources(resource);
+      alice_accesspolicy.addResource(resource);
+      alice.addAccessPolicy(alice_accesspolicy);
 
       bob.addDevices(bob_device);
       bob.addUserCredentials(bob_credentials);
       bob_agent.addDevice(bob_device);
       bob_agent.addUser(bob);
-      //bob.addResources(resource);
+      bob_accesspolicy.addResource(resource);
+      bob.addAccessPolicy(bob_accesspolicy);
 
       //accessPolicies.addUsers(alice);
       //accessPolicies.addUsers(bob);

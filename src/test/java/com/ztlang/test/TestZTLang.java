@@ -37,6 +37,9 @@ public class TestZTLang extends ZTLangTest {
     public final Agent bob_agent = new Agent("bob agent");
     public final Agent charlie_agent = new Agent("charlie agent");
 
+    public final AccessPolicies alice_accesspolicy = new AccessPolicies("Alice acesspolicy");
+    public final AccessPolicies bob_accesspolicy = new AccessPolicies("Bob acesspolicy");
+
     public ZTLangModel() {
       controlplane.addAgent(alice_agent);
       controlplane.addAgent(bob_agent);
@@ -59,6 +62,12 @@ public class TestZTLang extends ZTLangTest {
       charlie_agent.addDevice(charlie_device);
       charlie_agent.addUser(charlie);
       //charlie.addResources(accessPolicies);
+
+      alice.addAccessPolicy(alice_accesspolicy);
+      bob.addAccessPolicy(bob_accesspolicy);
+
+      alice_accesspolicy.addResource(resource);
+      //bob_accesspolicy.addResource(resource);
 
       //accessPolicies.addUsers(alice);
     }
@@ -123,18 +132,19 @@ public class TestZTLang extends ZTLangTest {
     model.resource.Access.assertCompromisedInstantaneously();
   }
 
-  @Test
-  public void testCompromiseAccessPoliciesAndPhishing() {
-    var model = new ZTLangModel();
-    var attacker = new Attacker();
+  // @Test
+  // public void testCompromiseAccessPoliciesAndPhishing() {
+  //   var model = new ZTLangModel();
+  //   var attacker = new Attacker();
 
-    attacker.addAttackPoint(model.charlie_credentials.Compromise);
-    attacker.addAttackPoint(model.charlie_device.Compromise);
-    attacker.addAttackPoint(model.alice_device.Compromise);
-    attacker.attack();
+  //   attacker.addAttackPoint(model.charlie_credentials.Compromise);
+  //   attacker.addAttackPoint(model.charlie_device.Compromise);
 
-    model.resource.Access.assertCompromisedInstantaneously();
-  }
+  //   attacker.addAttackPoint(model.alice_device.Compromise);
+  //   attacker.attack();
+
+  //   model.resource.Access.assertCompromisedInstantaneously();
+  // }
 
   @Test
   public void testCompromiseControlPlane() {

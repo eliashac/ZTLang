@@ -39,19 +39,26 @@ category Device {
 
 category Agent {
   asset Agent {
+    let allowedResources = user.accessPolicy.resource /\ controlplane.resources
+
     | FormAgent
       -> RequirementsFulfilled
 
     & RequirementsFulfilled
-        -> controlplane.AllowAccess
+        //-> controlplane.AllowAccess
+        -> allowedResources().Access
   }
 }
 
 category ControlPlane {
   asset ControlPlane {
+    //let allowedResources = agent.user.accessPolicy.resource /\ resources
+    
     | AllowAccess
       //-> agent.user.resources.Access
+      //-> allowedResources().Access
       -> resources.Access
+
 
     | DDoS
       -> resources.Deny
@@ -96,4 +103,7 @@ associations {
   //User [users] * <-- requestableResources --> * [resources] EnterpriseResource
   ControlPlane [controlplane] 1 <-- allowsAccess --> * [resources] EnterpriseResource
   Agent [agent] * <-- allowsAccess --> 1 [controlplane] ControlPlane
+
+  User [user] 1 <-- accessPolicies --> 1 [accessPolicy] AccessPolicies
+  AccessPolicies [accessPolicy] * <-- accessPolicies --> * [resource] EnterpriseResource
 }
