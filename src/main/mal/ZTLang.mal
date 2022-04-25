@@ -72,8 +72,6 @@ category Resource {
 
   asset AccessPolicies extends EnterpriseResource {
     | Access
-      //-> controlplane.agent.user.Phishing
-      //-> userPolicy.Access
       -> accessPolicy.Access
   }
 
@@ -106,5 +104,4 @@ associations {
   Agent [agent] * <-- allowsAccess --> 1 [controlplane] ControlPlane
   User [user] 1 <-- accessPolicy --> 1 [accessPolicy] AccessPolicy
   AccessPolicy [accessPolicy] * <-- accessPolicy --> * [resource] EnterpriseResource
-  //AccessPolicy [userPolicy] * <-- accessPolicy --> 1 [accessPolicies] AccessPolicies
 }
