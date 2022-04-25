@@ -45,18 +45,13 @@ category Agent {
       -> RequirementsFulfilled
 
     & RequirementsFulfilled
-        //-> controlplane.AllowAccess
         -> allowedResources().Access
   }
 }
 
 category ControlPlane {
   asset ControlPlane {
-    //let allowedResources = agent.user.accessPolicy.resource /\ resources
-    
     | AllowAccess
-      //-> agent.user.resources.Access
-      //-> allowedResources().Access
       -> resources.Access
 
 
@@ -77,13 +72,11 @@ category Resource {
 
   asset AccessPolicies extends EnterpriseResource {
     | Access
-      //-> users.Phishing
       -> controlplane.agent.user.Phishing
   }
 
   asset TrafficLogs extends EnterpriseResource {
     | Access
-      //-> users.Phishing
       -> controlplane.agent.user.Phishing
   }
 }
@@ -100,10 +93,8 @@ associations {
   UserCredentials [userCredentials] 1 <-- userCredentials --> 1 [user] User
   Device [device] 1 <-- associatedDevice --> 1 [agent] Agent
   User [user] 1 <-- associatedUser --> 1 [agent] Agent
-  //User [users] * <-- requestableResources --> * [resources] EnterpriseResource
   ControlPlane [controlplane] 1 <-- allowsAccess --> * [resources] EnterpriseResource
   Agent [agent] * <-- allowsAccess --> 1 [controlplane] ControlPlane
-
   User [user] 1 <-- accessPolicies --> 1 [accessPolicy] AccessPolicies
   AccessPolicies [accessPolicy] * <-- accessPolicies --> * [resource] EnterpriseResource
 }
