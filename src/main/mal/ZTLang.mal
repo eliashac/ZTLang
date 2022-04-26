@@ -37,18 +37,6 @@ category Device {
   }
 }
 
-category Agent {
-  asset Agent {
-    let allowedResources = user.accessPolicy.resource /\ controlplane.resources
-
-    | FormAgent
-      -> RequirementsFulfilled
-
-    & RequirementsFulfilled
-        -> allowedResources().Access
-  }
-}
-
 category ControlPlane {
   asset ControlPlane {
     | AllowAccess
@@ -60,6 +48,16 @@ category ControlPlane {
 
     | Compromise
       -> resources.Access
+  }
+
+  asset Agent {
+    let allowedResources = user.accessPolicy.resource /\ controlplane.resources
+
+    | FormAgent
+      -> RequirementsFulfilled
+
+    & RequirementsFulfilled
+        -> allowedResources().Access
   }
 }
 
