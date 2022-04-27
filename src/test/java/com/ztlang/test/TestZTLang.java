@@ -75,11 +75,15 @@ public class TestZTLang extends ZTLangTest {
       //bob_accesspolicy.addResource(resource);
       charlie_accesspolicy.addResource(accessPolicies);
 
-      accessPolicies.addAccessPolicy(alice_accesspolicy);
-      accessPolicies.addAccessPolicy(bob_accesspolicy);
-      accessPolicies.addAccessPolicy(charlie_accesspolicy);
+      //accessPolicies.addAccessPolicy(alice_accesspolicy);
+      //accessPolicies.addAccessPolicy(bob_accesspolicy);
+      //accessPolicies.addAccessPolicy(charlie_accesspolicy);
 
       //accessPolicies.addUsers(alice);
+
+      controlplane.addStoredPolicy(alice_accesspolicy);
+      controlplane.addStoredPolicy(bob_accesspolicy);
+      controlplane.addStoredPolicy(charlie_accesspolicy);
     }
   }
 

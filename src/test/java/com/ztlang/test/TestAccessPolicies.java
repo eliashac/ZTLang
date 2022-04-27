@@ -23,7 +23,7 @@ public class TestAccessPolicies extends ZTLangTest {
   @Test
   public void AccessResourceWithoutAccessPolicies() {
     // Bobs tries to access resource without accessRights, and fails
-    
+
     // Adding assets
     ControlPlane controlplane = new ControlPlane("control plane");
     User bob   = new User("bob");
@@ -32,7 +32,7 @@ public class TestAccessPolicies extends ZTLangTest {
     UserCredentials bob_credentials   = new UserCredentials("bob_credentials");
     Agent bob_agent = new Agent("bob agent");
     AccessPolicy bob_accesspolicy = new AccessPolicy("Bob acesspolicy");
-    
+
     // Setting up associations
     controlplane.addAgent(bob_agent);
     controlplane.addResources(resource);
@@ -57,7 +57,7 @@ public class TestAccessPolicies extends ZTLangTest {
   @Test
   public void AccessResourceWithAccessPolicies() {
     // Alices accesses resource with accessRights
-    
+
     // Adding assets
     ControlPlane controlplane = new ControlPlane("control plane");
     User alice = new User("alice");
@@ -66,7 +66,7 @@ public class TestAccessPolicies extends ZTLangTest {
     UserCredentials alice_credentials = new UserCredentials("alice_credentials");
     Agent alice_agent = new Agent("alice agent");
     AccessPolicy alice_accesspolicy = new AccessPolicy("Alice acesspolicy");
-    
+
     // Setting up associations
     controlplane.addAgent(alice_agent);
     controlplane.addResources(resource);
@@ -91,7 +91,7 @@ public class TestAccessPolicies extends ZTLangTest {
   @Test
   public void AccessPoliciesToOneResourceDoesntGiveAccessToAll() {
     // Bob tries to access Resource B but has only accessRights to Resource A
-    
+
     // Adding assets
     ControlPlane controlplane = new ControlPlane("control plane");
     User bob   = new User("bob");
@@ -101,7 +101,7 @@ public class TestAccessPolicies extends ZTLangTest {
     UserCredentials bob_credentials   = new UserCredentials("bob_credentials");
     Agent bob_agent = new Agent("bob agent");
     AccessPolicy bob_accesspolicy = new AccessPolicy("Bob acesspolicy");
-    
+
     // Setting up associations
     controlplane.addAgent(bob_agent);
     controlplane.addResources(resource_A);
@@ -128,10 +128,10 @@ public class TestAccessPolicies extends ZTLangTest {
   @Test
   public void AccessToOneResourceForOneUserDoesntGiveAccessForAllUsers() {
     // Bob tries to access Resource B but has only accessRights to Resource A
-    
+
     // Adding assets
     ControlPlane controlplane = new ControlPlane("control plane");
-    
+
     EnterpriseResource resource = new EnterpriseResource("resource");
 
     User alice = new User("alice");
@@ -151,14 +151,14 @@ public class TestAccessPolicies extends ZTLangTest {
     controlplane.addAgent(bob_agent);
     controlplane.addAgent(alice_agent);
     controlplane.addResources(resource);
-    
+
     alice.addDevices(alice_device);
     alice.addUserCredentials(alice_credentials);
     alice_agent.addDevice(alice_device);
     alice_agent.addUser(alice);
     alice_accesspolicy.addResource(resource);
     alice.addAccessPolicy(alice_accesspolicy);
-    
+
     bob.addDevices(bob_device);
     bob.addUserCredentials(bob_credentials);
     bob_agent.addDevice(bob_device);
@@ -176,4 +176,5 @@ public class TestAccessPolicies extends ZTLangTest {
 
     resource.Access.assertUncompromised();
   }
+
 }

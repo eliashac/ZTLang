@@ -70,7 +70,7 @@ category Resource {
 
   asset AccessPolicies extends EnterpriseResource {
     | Access
-      -> accessPolicy.Access
+      -> controlplane.storedPolicy.Access
   }
 
   asset TrafficLogs extends EnterpriseResource {
@@ -102,4 +102,6 @@ associations {
   Agent [agent] * <-- allowsAccess --> 1 [controlplane] ControlPlane
   User [user] 1 <-- accessPolicy --> 1 [accessPolicy] AccessPolicy
   AccessPolicy [accessPolicy] * <-- accessPolicy --> * [resource] EnterpriseResource
+
+  AccessPolicy [storedPolicy] * <-- uses --> 1 [controlPlane] ControlPlane
 }
