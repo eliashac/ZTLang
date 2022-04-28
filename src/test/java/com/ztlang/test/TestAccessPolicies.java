@@ -21,7 +21,7 @@ import org.junit.jupiter.api.Test;
 public class TestAccessPolicies extends ZTLangTest {
 
   @Test
-  public void AccessResourceWithoutAccessPolicies() {
+  public void testAccessResourceWithoutAccessPolicies() {
     // Bobs tries to access resource without accessRights, and fails
 
     // Adding assets
@@ -55,7 +55,7 @@ public class TestAccessPolicies extends ZTLangTest {
   }
 
   @Test
-  public void AccessResourceWithAccessPolicies() {
+  public void testAccessResourceWithAccessPolicies() {
     // Alices accesses resource with accessRights
 
     // Adding assets
@@ -89,7 +89,7 @@ public class TestAccessPolicies extends ZTLangTest {
   }
 
   @Test
-  public void AccessPoliciesToOneResourceDoesntGiveAccessToAll() {
+  public void testAccessPoliciesToOneResourceDoesntGiveAccessToAll() {
     // Bob tries to access Resource B but has only accessRights to Resource A
 
     // Adding assets
@@ -126,7 +126,7 @@ public class TestAccessPolicies extends ZTLangTest {
   }
 
   @Test
-  public void AccessToOneResourceForOneUserDoesntGiveAccessForAllUsers() {
+  public void testAccessToOneResourceForOneUserDoesntGiveAccessForAllUsers() {
     // Bob tries to access Resource B but has only accessRights to Resource A
 
     // Adding assets

@@ -21,7 +21,7 @@ import org.junit.jupiter.api.Test;
 public class TestDevice extends ZTLangTest {
   private static class ZTLangModel {
     public final ControlPlane controlplane = new ControlPlane("control plane");
-    
+
     public final User alice = new User("alice");
     public final User bob   = new User("bob");
     public final EnterpriseResource resource = new EnterpriseResource("resource");
@@ -39,7 +39,7 @@ public class TestDevice extends ZTLangTest {
       controlplane.addAgent(alice_agent);
       controlplane.addAgent(bob_agent);
       controlplane.addResources(resource);
-      
+
       alice.addDevices(alice_device);
       alice.addUserCredentials(alice_credentials);
       alice_agent.addDevice(alice_device);
@@ -57,7 +57,7 @@ public class TestDevice extends ZTLangTest {
   }
 
   @Test
-  public void AccessResourceWithUntrustedDevice() {
+  public void testAccessResourceWithUntrustedDevice() {
     // Bobs device is untrusted and he tries to access a resource with his credentials
     var model = new ZTLangModel();
     var attacker = new Attacker();
@@ -70,7 +70,7 @@ public class TestDevice extends ZTLangTest {
   }
 
   @Test
-  public void AccessResourceWithTrustedDevice() {
+  public void testAccessResourceWithTrustedDevice() {
     // Alices device is trusted and he tries to access a resource with her credentials
     var model = new ZTLangModel();
     var attacker = new Attacker();
@@ -83,7 +83,7 @@ public class TestDevice extends ZTLangTest {
   }
 
   @Test
-  public void AccessResourceWithAnotherUntrustedDevice() {
+  public void testAccessResourceWithAnotherUntrustedDevice() {
     // Alice uses Bobs untrusted device, and tries to access a resource with her (Alices) credentials
     var model = new ZTLangModel();
     var attacker = new Attacker();
@@ -96,7 +96,7 @@ public class TestDevice extends ZTLangTest {
   }
 
   @Test
-  public void AccessResourceWithAnotherTrustedDevice() {
+  public void testAccessResourceWithAnotherTrustedDevice() {
     // Bob uses Alices trusted device, and tries to access a resource with his (Bobs) credentials
     var model = new ZTLangModel();
     var attacker = new Attacker();
@@ -109,7 +109,7 @@ public class TestDevice extends ZTLangTest {
   }
 
   @Test
-  public void AccessResourceWithoutDevice() {
+  public void testAccessResourceWithoutDevice() {
     // Alices tries to access a resource without a device
     var model = new ZTLangModel();
     var attacker = new Attacker();
