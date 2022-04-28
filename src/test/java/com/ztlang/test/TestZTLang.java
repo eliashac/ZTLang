@@ -146,29 +146,4 @@ public class TestZTLang extends ZTLangTest {
     model.resource.Access.assertCompromisedInstantaneously();
   }
 
-  @Test
-  public void testCompromiseAccessPoliciesAndPhishing() {
-    var model = new ZTLangModel();
-    var attacker = new Attacker();
-
-    attacker.addAttackPoint(model.charlie_credentials.Compromise);
-    attacker.addAttackPoint(model.charlie_device.Compromise);
-
-    attacker.addAttackPoint(model.alice_device.Compromise);
-    attacker.attack();
-
-    model.resource.Access.assertCompromisedInstantaneously();
-  }
-
-  @Test
-  public void testCompromiseControlPlane() {
-    var model = new ZTLangModel();
-    var attacker = new Attacker();
-
-    attacker.addAttackPoint(model.controlplane.Compromise);
-    attacker.attack();
-
-    model.resource.Access.assertCompromisedInstantaneously();
-  }
-
 }
