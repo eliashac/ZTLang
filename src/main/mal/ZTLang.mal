@@ -22,6 +22,9 @@ category User {
     | Phishing
       -> userCredentials.Compromise
 
+    | DeviceCompromised
+      -> RequestAccess
+
     & RequestAccess
       -> agent.FormAgent
   }
@@ -30,7 +33,7 @@ category User {
 category Device {
   asset Device {
     | Compromise
-      -> user.RequestAccess
+      -> user.DeviceCompromised
 
     # Untrusted [Enabled]
       -> agent.RequirementsFulfilled
