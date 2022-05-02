@@ -52,4 +52,15 @@ public class TestControlPlane extends ZTLangTest {
 
     resource.Access.assertUncompromised();
   }
+
+  @Test
+  public void testCompromiseControlPlane() {
+    var model = new ZTLangModel();
+    var attacker = new Attacker();
+
+    attacker.addAttackPoint(model.controlplane.Compromise);
+    attacker.attack();
+
+    model.resource.Access.assertCompromisedInstantaneously();
+  }
 }
