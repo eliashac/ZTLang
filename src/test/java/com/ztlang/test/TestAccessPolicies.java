@@ -179,16 +179,56 @@ public class TestAccessPolicies extends ZTLangTest {
 
   @Test
   public void testCompromiseAccessPoliciesAndPhishing() {
-    var model = new ZTLangModel();
+    // Adding assets
+    ControlPlane controlplane = new ControlPlane("control plane");
+
+    EnterpriseResource resource = new EnterpriseResource("resource");
+    EnterpriseResource accessPolicies = new EnterpriseResource("accessPolicies");
+
+    User alice = new User("alice");
+    Device alice_device = new Device("alice device", false);
+    UserCredentials alice_credentials = new UserCredentials("alice_credentials");
+    Agent alice_agent = new Agent("alice agent");
+    AccessPolicy alice_accesspolicy = new AccessPolicy("Alice acesspolicy");
+
+    User bob = new User("bob");
+    Device bob_device   = new Device("bob device", false);
+    UserCredentials bob_credentials   = new UserCredentials("bob_credentials");
+    Agent bob_agent = new Agent("bob agent");
+    AccessPolicy bob_accesspolicy = new AccessPolicy("Bob acesspolicy");
+
+    // Setting up associations
+    controlplane.addAgent(bob_agent);
+    controlplane.addAgent(alice_agent);
+    controlplane.addResources(resource);
+    controlplane.addResources(accessPolicies);
+
+    alice.addDevices(alice_device);
+    alice.addUserCredentials(alice_credentials);
+    alice_agent.addDevice(alice_device);
+    alice_agent.addUser(alice);
+    alice_accesspolicy.addResource(resource);
+    alice.addAccessPolicy(alice_accesspolicy);
+
+    bob.addDevices(bob_device);
+    bob.addUserCredentials(bob_credentials);
+    bob_agent.addDevice(bob_device);
+    bob_agent.addUser(bob);
+    bob_accesspolicy.addResource(accessPolicies);
+    bob.addAccessPolicy(bob_accesspolicy);
+
+    accessPolicies.addAccessPolicy(alice_accesspolicy);
+    accessPolicies.addAccessPolicy(bob_accesspolicy);
+
     var attacker = new Attacker();
 
-    attacker.addAttackPoint(model.charlie_credentials.Compromise);
-    attacker.addAttackPoint(model.charlie_device.Compromise);
+    attacker.addAttackPoint(bob_credentials.Compromise);
+    attacker.addAttackPoint(bob_device.Compromise);
 
-    attacker.addAttackPoint(model.alice_device.Compromise);
+    attacker.addAttackPoint(alice_device.Compromise);
     attacker.attack();
 
-    model.resource.Access.assertCompromisedInstantaneously();
+    resource.Access.assertCompromisedInstantaneously();
   }
 
 }

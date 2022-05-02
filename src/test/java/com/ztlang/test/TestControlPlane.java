@@ -55,12 +55,29 @@ public class TestControlPlane extends ZTLangTest {
 
   @Test
   public void testCompromiseControlPlane() {
-    var model = new ZTLangModel();
+    ControlPlane controlplane = new ControlPlane("control plane");
+    User alice = new User("alice");
+    EnterpriseResource resource = new EnterpriseResource("resource");
+    Device alice_device = new Device("alice device", false);
+    UserCredentials alice_credentials = new UserCredentials("alice_credentials");
+    Agent alice_agent = new Agent("alice agent");
+    AccessPolicy alice_accesspolicy = new AccessPolicy("Alice acesspolicy");
+
+    controlplane.addAgent(alice_agent);
+    controlplane.addResources(resource);
+    alice.addDevices(alice_device);
+    alice.addUserCredentials(alice_credentials);
+    alice_agent.addDevice(alice_device);
+    alice_agent.addUser(alice);
+    alice.addAccessPolicy(alice_accesspolicy);
+    alice_accesspolicy.addUser(alice);
+    alice_accesspolicy.addResource(resource);
+
     var attacker = new Attacker();
 
-    attacker.addAttackPoint(model.controlplane.Compromise);
+    attacker.addAttackPoint(controlplane.Compromise);
     attacker.attack();
 
-    model.resource.Access.assertCompromisedInstantaneously();
+    resource.Access.assertCompromisedInstantaneously();
   }
 }
