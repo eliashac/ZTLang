@@ -25,20 +25,20 @@ public class TestExampleModel extends ZTLangTest {
     public final User alice = new User("alice");
     public final User bob   = new User("bob");
     public final User charlie   = new User("charlie");
-    
+
     public final EnterpriseResource organization_database = new EnterpriseResource("Organization Database");
     public final EnterpriseResource organization_web_service = new EnterpriseResource("Organization Web Service");
     public final AccessPolicies accessPolicies = new AccessPolicies("access policies");
-    
+
     public final Device alice_laptop = new Device("Alice Laptop", false);
     public final Device bob_laptop   = new Device("Bob Laptop", false);
-    public final Device charlie_laptop = new Device("Charlie Laptop", true);
-    public final Device alice_phone = new Device("Alice Phone", false);
-    
+    public final Device charlie_laptop = new Device("Charlie Laptop", false);
+    public final Device alice_phone = new Device("Alice Phone", true);
+
     public final UserCredentials alice_credentials = new UserCredentials("alice_credentials");
     public final UserCredentials bob_credentials   = new UserCredentials("bob_credentials");
     public final UserCredentials charlie_credentials   = new UserCredentials("charlie_credentials");
-    
+
     public final Agent alice_agent_a = new Agent("alice agent a");
     public final Agent alice_agent_b = new Agent("alice agent b");
     public final Agent bob_agent = new Agent("bob agent");
